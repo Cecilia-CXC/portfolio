@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - CXC Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #d8466e 0%, #8b8cd1 100%);
+            min-height: 100vh;
+            transition: background 0.8s ease;
+        }
+
+        /* Experience-specific background colors */
+        body.metabots-bg {
+            background: #ff7600; 
+        }
+
+        body.odb-bg {
+            background: #ffa500; 
+        }
+
+        body.dp-bg {
+            background: #00868B;    
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 120px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        /* Experience Selection Boxes */
+        .experiences-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .experience-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .experience-box:hover::before {
+            left: 100%;
+        }
+
+        .experience-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: #d8466e;
+        }
+
+        .experience-box.active {
+            border-color: #d8466e;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .experience-type {
+            display: inline-block;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .experience-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+            line-height: 1.3;
+        }
+
+        .experience-company {
+            color: #d8466e;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-years {
+            color: #666;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Content Display Area - Constrained Width */
+        .content-area {
+            max-width: 1000px;
+            margin: 0 auto 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            min-height: 400px;
+            transition: all 0.5s ease;
+        }
+
+        .content-area .container {
+            max-width: none;
+            margin: 0;
+            padding: 3rem 2rem;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #999;
+            font-size: 1.2rem;
+            padding: 4rem 2rem;
+        }
+
+        .experience-content {
+            display: none;
+        }
+
+        .experience-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .content-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .content-company {
+            font-size: 1.3rem;
+            color: #d8466e;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .content-years {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .content-body {
+            line-height: 1.8;
+        }
+
+        .content-body h3 {
+            color: #d8466e;
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .content-body p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .content-body ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .skills-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .skill-tag {
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Reset button for returning to default background */
+        .reset-bg-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-bg-btn:hover {
+            background: #fff;
+            border-color: #d8466e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border-radius: 0 0 15px 15px;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0 1rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .experiences-container {
+                grid-template-columns: 1fr;
+            }
+
+            .content-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-area {
+                margin: 0 1rem 2rem 1rem;
+                max-width: none;
+            }
+
+            .content-area .container {
+                padding: 2rem 1.5rem;
+            }
+
+            .reset-bg-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .skills-tags {
+                justify-content: center;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <img src="CXC.png" alt="CXC Logo" class="logo">
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="experience.html" class="active">Experience</a></li> 
+                <li><a href="faith.html">Faith</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Experience</h1>
+            <p class="page-subtitle">My Professional & Volunteer Journey</p>
+
+            <!-- Experience Selection Boxes -->
+            <div class="experiences-container">
+                <!-- Experience 1: Current Internship -->
+                <div class="experience-box" onclick="showExperienceContent('experience1', 'metabots')">
+                    <div class="experience-type">Polytechnic Internship</div>
+                    <div class="experience-info">
+                        <h3>Robotics Research Analyst</h3>
+                        <div class="experience-company">Metabots Pte Ltd</div>
+                        <div class="experience-years">Sep 2025 - Feb 2026</div>
+                    </div>
+                </div>
+
+                <!-- Experience 2: Volunteer at ODB -->
+                <div class="experience-box" onclick="showExperienceContent('experience2', 'odb')">
+                    <div class="experience-type">Volunteer Work</div>
+                    <div class="experience-info">
+                        <h3>Data Reporting Analyst</h3>
+                        <div class="experience-company">Our Daily Bread Singapore</div>
+                        <div class="experience-years">Mar 2025 - Apr 2025</div>
+                    </div>
+                </div>
+
+                <!-- Experience 3: Part-time Work -->
+                <div class="experience-box" onclick="showExperienceContent('experience3', 'dp')">
+                    <div class="experience-type">Part-time Work</div>
+                    <div class="experience-info">
+                        <h3>Marketing Intern</h3>
+                        <div class="experience-company">Dunn & Partners</div>
+                        <div class="experience-years">Aug 2023 - Oct 2023</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Content Display Area (Constrained Width) -->
+        <div class="content-area">
+            <!-- Default Placeholder -->
+            <div class="content-placeholder" id="placeholder">
+                <h2>Select an experience to view details</h2>
+                <p>Click on any of the experiences above to learn more about my roles and contributions.</p>
+            </div>
+
+            <!-- Experience 1 Content -->
+            <div class="experience-content" id="experience1">
+                <div class="container">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Robotics Research Analyst Intern</h2>
+                            <div class="content-company">Metabots Pte Ltd</div>
+                            <div class="content-years">Sep 2025 - Feb 2026</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About the Role</h3>
+                        <p>I'm currently interning at Metabots Pte Ltd as a Robotics Research Analyst</p>
+                        
+                        <h3>Key Responsibilities</h3>
+                        <ul>
+                            <li>Organized the company's service reports on Excel</li>
+                            <li>Created trial dashbaords using data from the robots</li>
+                            <li>Research and suggested platforms the company can use to improve their FAE operations</li>
+                        </ul>
+
+                        <h3>Skills Applied</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Research</span>
+                            <span class="skill-tag">Data Analysis</span>
+                            <span class="skill-tag">UI</span>
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">Python</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience 2 Content -->
+            <div class="experience-content" id="experience2">
+                <div class="container">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Data Reporting Analyst</h2>
+                            <div class="content-company">Our Daily Bread Singapore</div>
+                            <div class="content-years">March 2025 - April 2025</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About My Role</h3>
+                        <p>During my time volunteering at Our Daily Bread Singapore, I 
+                            applied my skills in data analytics to help analyze web traffic data for the organization and identify
+                            any trends and patterns in many areas such as number of users over a month and more and then report of the 
+                            insights found. 
+                        </p>
+                        
+                        <h3>Key Responsibilities</h3>
+                        <ul>
+                            <li>Made use of GA4 Query & Looker Studio to analyse web traffic data</li>
+                            <li>Report on the insights found</li>
+                            <li>Suggest ideas on how the data can be further analyse and probed further</li>
+                        </ul>
+
+                        <h3>Skills Developed</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Data collection</span>
+                            <span class="skill-tag">Looker Studio</span>
+                            <span class="skill-tag">Google Analytics</span>
+                            <span class="skill-tag">Data Analysis</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Experience 3 Content -->
+            <div class="experience-content" id="experience3">
+                <div class="container">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Marketing Intern</h2>
+                            <div class="content-company">Dunn & Partners</div>
+                            <div class="content-years">Aug 2023 - Oct 2023</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About My Work</h3>
+                        <p>During my working part time at Dunn & Partners, I made use of marketing and digitl tools to 
+                            do different tasks. From creating content to using tools like Excel and sheets to edit, enter and analyse 
+                            data. 
+                        </p>
+                        
+                        <h3>Key Contributions</h3>
+                        <ul>
+                            <li>Made use of Canva to create content</li>
+                            <li>Made use of Google Sheets to enter client data</li>
+                            <li>Made use of Excel to analyse data</li>
+                        </ul>
+
+                        <h3>Skills Applied</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Data Analysis</span>
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">Google Sheets</span>
+                            <span class="skill-tag">Data Entry</span>
+                            <span class="skill-tag">Canva</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reset Background Button -->
+    <button class="reset-bg-btn" onclick="resetBackground()">Reset</button>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        }
+
+        // Show experience content and change background
+        function showExperienceContent(experienceId, experienceClass) {
+            // Remove active class from all experience boxes
+            const experienceBoxes = document.querySelectorAll('.experience-box');
+            experienceBoxes.forEach(box => box.classList.remove('active'));
+            
+            // Add active class to clicked experience box
+            event.currentTarget.classList.add('active');
+            
+            // Change body background based on experience
+            const body = document.body;
+            body.className = ''; // Clear all classes
+            body.classList.add(experienceClass + '-bg');
+            
+            // Hide placeholder
+            document.getElementById('placeholder').style.display = 'none';
+            
+            // Hide all experience content
+            const allContent = document.querySelectorAll('.experience-content');
+            allContent.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected experience content
+            document.getElementById(experienceId).classList.add('active');
+        }
+
+        // Reset background to default
+        function resetBackground() {
+            const body = document.body;
+            body.className = ''; // Remove all background classes
+            
+            // Remove active class from all experience boxes
+            const experienceBoxes = document.querySelectorAll('.experience-box');
+            experienceBoxes.forEach(box => box.classList.remove('active'));
+            
+            // Hide all experience content and show placeholder
+            const allContent = document.querySelectorAll('.experience-content');
+            allContent.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById('placeholder').style.display = 'block';
+        }
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Add smooth scroll behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const experienceBoxes = document.querySelectorAll('.experience-box');
+            experienceBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    setTimeout(() => {
+                        document.querySelector('.content-area').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

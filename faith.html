@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faith - CXC Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #d8466e 0%, #8b8cd1 100%);
+            min-height: 100vh;
+            transition: background 0.8s ease;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 120px;
+            padding: 2rem 0 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        /* Bible Verse Section */
+        .verse-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 4rem;
+        }
+
+        .verse-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #333;
+            font-style: italic;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .verse-reference {
+            font-size: 1.1rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Faith Service Boxes - Horizontal Layout */
+        .faith-services {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .service-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .service-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .service-box:hover::before {
+            left: 100%;
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: #d8466e;
+        }
+
+        /* Service Icon */
+        .service-icon {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            border-radius: 50%;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        /* Service Content */
+        .service-content {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .service-organization {
+            font-size: 1.1rem;
+            color: #d8466e;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .service-about-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .service-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .service-description li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-description li::before {
+            content: '•';
+            color: #d8466e;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Category-specific styling */
+        .church-service { border-left: 6px solid #51a8d4; }
+        .data-service { border-left: 6px solid #ffa500; }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .service-box {
+                flex-direction: column;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .service-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border-radius: 0 0 15px 15px;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0 1rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .verse-section {
+                padding: 2rem;
+                margin-bottom: 3rem;
+            }
+
+            .verse-text {
+                font-size: 1.1rem;
+            }
+
+            .service-box {
+                padding: 2rem;
+            }
+
+            .service-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animation for service boxes */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-box {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .service-box:nth-child(1) { animation-delay: 0.2s; }
+        .service-box:nth-child(2) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <img src="CXC.png" alt="CXC Logo" class="logo">
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="experience.html">Experience</a></li> 
+                <li><a href="faith.html" class="active">Faith</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Faith</h1>
+            <p class="page-subtitle">Living Out My Purpose Through Service</p>
+
+            <!-- Bible Verse Section -->
+            <div class="verse-section">
+                <div class="verse-text">
+                    "But seek first the kingdom of God and his righteousness, and all these things will be added to you."
+                </div>
+                <div class="verse-reference">Matthew 6:33 (ESV)</div>
+            </div>
+
+            <!-- Faith Services -->
+            <div class="faith-services">
+                <!-- Church Service -->
+                <div class="service-box church-service">
+                    <div class="service-icon">💒</div>
+                    <div class="service-content">
+                        <h2 class="service-title">Elderly Ministry Helper</h2>
+                        <div class="service-organization">Fisherman of Christ Fellowship (Geylang Centre)</div>
+                        <div class="service-about-title">About:</div>
+                        <div class="service-description">
+                            <ul>
+                                <li>Supporting weekly programmes for elderly attendees through service, companionship, and creative activities</li>
+                                <li>Assisting with lunch distribution, arts-and-crafts sessions, and engagement activities</li>
+                                <li>Contributing to a warm and supportive community environment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Analysis Service -->
+                <div class="service-box data-service">
+                    <div class="service-icon">📊</div>
+                    <div class="service-content">
+                        <h2 class="service-title">Data Reporting Analyst Volunteer</h2>
+                        <div class="service-organization">Our Daily Bread Singapore</div>
+                        <div class="service-about-title">About:</div>
+                        <div class="service-description">
+                            <ul>
+                                <li>Applying data analysis skills to interpret website traffic and user engagement metrics</li>
+                                <li>Providing insights to support the organisation’s digital outreach strategy</li>
+                                <li>Supporting non-profit operations through data reporting and dashboard creation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        }
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

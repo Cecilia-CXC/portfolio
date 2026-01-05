@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Education - CXC Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #d8466e 0%, #8b8cd1 100%);
+            min-height: 100vh;
+            transition: background 0.8s ease;
+        }
+
+        /* School-specific background colors */
+        body.hgs-bg {
+            background: #ffbf00; /* Sea Green for Haig Girls' School */
+        }
+
+        body.kc-bg {
+            background: #0f52ba; /* Royal Blue for CHIJ Katong Convent */
+        }
+
+        body.pfp-bg {
+            background: #800000; /* Tomato Red for PFP */
+        }
+
+        body.iit-bg {
+            background: #4e97ea; /* Blue Violet for IIT */
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 120px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        /* School Selection Boxes */
+        .schools-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .school-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+        }
+
+        .school-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            border-color: #d8466e;
+        }
+
+        .school-box.active {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .school-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: #333;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .school-years {
+            color: #666;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        /* Content Display Area */
+        .content-area {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            min-height: 400px;
+            transition: all 0.5s ease;
+        }
+
+        .content-placeholder {
+            text-align: center;
+            color: #999;
+            font-size: 1.2rem;
+            padding: 4rem 2rem;
+        }
+
+        .school-content {
+            display: none;
+        }
+
+        .school-content.active {
+            display: block;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .content-title h2 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .content-years {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .content-body {
+            line-height: 1.8;
+        }
+
+        .content-body h3 {
+            color: #d8466e;
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        .content-body p {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .content-body ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+
+        .content-body li {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        /* Reset button for returning to default background */
+        .reset-bg-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-bg-btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border-radius: 0 0 15px 15px;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0 1rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .schools-container {
+                grid-template-columns: 1fr;
+            }
+
+            .content-title h2 {
+                font-size: 1.8rem;
+            }
+
+            .content-area {
+                padding: 2rem;
+            }
+
+            .reset-bg-btn {
+                bottom: 20px;
+                right: 20px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <img src="CXC.png" alt="CXC Logo" class="logo">
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="education.html" class="active">Education</a></li>
+                <li><a href="experience.html">Experience</a></li> 
+                <li><a href="faith.html">Faith</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html">Projects</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Education</h1>
+            <p class="page-subtitle">My Academic Journey</p>
+
+            <!-- School Selection Boxes -->
+            <div class="schools-container">
+                <!-- School 1 -->
+                <div class="school-box" onclick="showSchoolContent('school1', 'hgs')">
+                    <div class="school-info">
+                        <h3>Haig Girls' School</h3>
+                        <div class="school-years">2012 - 2017</div>
+                    </div>
+                </div>
+
+                <!-- School 2 -->
+                <div class="school-box" onclick="showSchoolContent('school2', 'kc')">
+                    <div class="school-info">
+                        <h3>CHIJ Katong Convent</h3>
+                        <div class="school-years">2018 - 2021</div>
+                    </div>
+                </div>
+
+                <!-- School 3 -->
+                <div class="school-box" onclick="showSchoolContent('school3', 'pfp')">
+                    <div class="school-info">
+                        <h3>Polytechnic Foundation Programme (PFP) @Temasek Polytechnic</h3>
+                        <div class="school-years">2022 - 2023</div>
+                    </div>
+                </div>
+
+                <!-- School 4 -->
+                <div class="school-box" onclick="showSchoolContent('school4', 'iit')">
+                    <div class="school-info">
+                        <h3>Temasek Polytechnic School of Informatics & IT (IIT)</h3>
+                        <div class="school-years">2023 - 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Display Area -->
+            <div class="content-area">
+                <!-- Default Placeholder -->
+                <div class="content-placeholder" id="placeholder">
+                    <h2>Select a school to view details</h2>
+                    <p>Click on any of the schools above to learn more about my experience there.</p>
+                </div>
+
+                <!-- School 1 Content -->
+                <div class="school-content" id="school1">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Haig Girls' School</h2>
+                            <div class="content-years">2012 - 2017</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>CCA</h3>
+                        <ul>
+                            <li>Netball Regular Member(2015-2017)</li>
+                        </ul>
+                        
+                        <h3>Class Roles</h3>
+                        <ul>
+                            <li>Class Attendence Leader (2017)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- School 2 Content -->
+                <div class="school-content" id="school2">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>CHIJ Katong Convent</h2>
+                            <div class="content-years">2018 - 2021</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>CCA</h3>
+                        <ul>
+                            <li>IJ Youth Mission (IJYM) Regular Member (2018-2021)</li>
+                                <ul>
+                                    <li>Helped out in school's annual CCA Fair</li>
+                                    <li>Visit All Saints Home to help out and interact with the Elderly </li>
+                                    <li>Organized a School-Wide donation drive for the Infant Jesus Homes and Children's Centre(IJHCC)</li>
+                                    <li>Help Organizing the Science Labs </li>
+                                    <li>Took Part in Annual CCA Competition</li>
+                                        <ul>
+                                            <li>Team Participation Award (2018)</li>
+                                            <li>Merit Award (2nd Team Placing) (2019)</li>
+                                        </ul>
+                                </ul>
+                        </ul>
+                        
+                        <h3>Key Achievements</h3>
+                        <ul>
+                            <li>GCE N(A)-Level results (English, Mathematics & Best 3 Subjects [EMB3]): 7 </li>
+                            <li> CCA Points: 2 (Excellent)</li>
+                            <li>Edusave Good Progress Award 2018</li>
+                            <li>Edusave Certificate of Academic Achievement 2018
+                            <li>Edusave Scholarship 2019</li></li>
+                            <li>Edusave Certificate of Academic Achievement 2019</li>
+                            <li>Academic Excellece Award 2019 - Top in Level</li>
+                            <li>Edusave Certificate of Academic Achievement 2020</li>
+                            <li>Academic Excellece Award 2021 - For outstanding performance in GCE N(A)-Levels</li>
+                        </ul>
+
+                        <h3>Class Roles</h3>
+                        <ul>
+                            <li>Class Subject Representative (Mathematics) (2018-2019)</li>
+                            <li>Class Subject Representative (Double Mathematics) (2020-2021)</li>
+                        </ul>
+
+                        <h3>Subjects Taken</h3>
+                        <p>Note: Grades shown using O-Level equivalent format for easier interpretation</p>
+                        <ul>
+                            <li>English Language: A2</li>
+                            <li>Chinese Language: B3</li>
+                            <li>Science: Chemistry & Biology: A1</li>
+                            <li>Elementary Mathematics (E-Math): A1</li>
+                            <li>Humanities: Social Studies & Geography: A1</li>
+                            <li>Principle of Accounts (POA): B3</li>
+                            <li>Additional Mathematics (A-Math): A2</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- School 3 Content -->
+                <div class="school-content" id="school3">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Polytechnic Foundation Programme (PFP) @ Temasek Polytechnic</h2>
+                            <div class="content-years">2022 - 2023</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About My Time Here</h3>
+                        <p>After N(A)-Levels, I entered Temasek Polytechnic via the Polytechnic Foundation Programme (PFP) and did a year of foundation studies 
+                            in preperation for my Diploma Studies in Temsek Polyetchic School of IIT
+                        </p>
+
+                        <h3>CCA</h3>
+                        <ul>
+                            <li>TP Community Service Club Regular Member (2022-2023)</li>
+                        </ul>
+
+                        <h3>Notable Activities</h3>
+                        <ul>
+                            <li>2023 Temasek Polytechnic Open House PFP Student Facilitator (User)</li>
+                            <li>2023 Temasek Polytechnic PFP Freshman Orientation Leader</li>
+                        </ul>
+                        
+                        <h3>Key Achievements</h3>
+                        <ul>
+                            <li>PFP GPA: 3.6</li>
+                            <li>Edusave Certificate of Academic Achievement 2023</li>
+                        </ul>
+
+                        <h3>Completed Modules</h3>
+                        <ul>
+                            <li>Introduction to Computer Science: B+</li>
+                            <li>Professional IT Skills: B</li>
+                            <li>Logic & Algorithms: B+</li>
+                            <li>Social Media & IT Trends: A</li>
+                            <li>Mathematics & Logical Thinking 1: Distinction</li>
+                            <li>Mathematics & Logical Thinking 2: A</li>
+                            <li>Research & Reasoning 1: B+</li>
+                            <li>Research & Reasoning 2: Distinction</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- School 4 Content -->
+                <div class="school-content" id="school4">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Temasek Polytechnic School of Informatics & IT (IIT)</h2>
+                            <div class="content-years">2023 - 2026</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About My Time Here</h3>
+                        <p>After PFP, I started my Diploma studies in Common ICT Programme (Year 1) after which I then went into
+                            my course of choice for my Year 2&3 studies (Diploma in Big Data & Analytics)
+                        </p>
+                        
+                        <h3>Current Studies & Achievements</h3>
+                        <ul>
+                            <li>Currently Pursuing a Diploma in Big Data & Analytics</li>
+                        </ul>
+
+                        <h3>CCA</h3>
+                        <ul>
+                            <li>TP Community Service Club Regular Member (2023-2026)</li>
+                        </ul>
+
+                        <h3>Class Roles</h3>
+                        <ul>
+                            <li>Class Representative (April 2024 - October 2024)</li>
+                        </ul>
+
+                        <h3>Notable Activities</h3>
+                        <ul>
+                            <li>2024 Temasek Polytechnic Open House for School of Informatics & IT Student Facilitator (User & Guide)</li>
+                            <li>2024 Temasek Polytechnic School of Informatics & IT Freshman Orientation Leader</li>
+                            <li>2025 Temasek Polytechnic Open House for School of Informatics & IT | Diploma in Big Data & Analytics (Student Ambassador & Volunteer) </li>
+                        </ul>
+
+                        <h3>Completed Modules</h3>
+                        <ul>
+                            <h4>Year 1</h4>
+                            <li>Logic & Mathematics: A</li>
+                            <li>Data Analytics & Visualization: B+</li>
+                            <li>Data Structures & Algorithms: B</li>
+                            <li>User Experience & Interface Design: B+</li>
+                            <h4> Year 2</h4>
+                            <li>Data Warehousing & Business Intelligence: B</li>
+                            <li>Data Engineering in the cloud: B</li>
+                            <li>Quantitative Analysis: B</li>
+                            <li>Data Science Essentials</li>
+                            <li>Data Mining & Business Analytics: B+</li>
+                            <li>Data Storytelling</li>
+                            <li>Machine Learning for Decision Making: B+</li>
+                            <li>Text & Social Media Analytics: B+</li>
+                            <li>Sustainability & Climate Action: Pass with Commendation</li>
+                            <h4>Year 3</h4>
+                            <li>Data Analytics for Environmental Sustainability: B+</li>
+                            <li>Green Software Principles: B+</li>
+                            <li>Major Project: tbc</li>
+                            <li>Internship: tbc</li>
+                        </ul>
+
+                        <h3>Internship</h3>
+                        <ul>
+                            <li>Interning at Metabots Pte Ltd (Sep 2025 - Feb 2026)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Reset Background Button -->
+    <button class="reset-bg-btn" onclick="resetBackground()">Reset</button>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        }
+
+        // Show school content and change background
+        function showSchoolContent(schoolId, schoolClass) {
+            // Remove active class from all school boxes
+            const schoolBoxes = document.querySelectorAll('.school-box');
+            schoolBoxes.forEach(box => box.classList.remove('active'));
+            
+            // Add active class to clicked school box
+            event.currentTarget.classList.add('active');
+            
+            // Change body background based on school
+            const body = document.body;
+            body.className = ''; // Clear all classes
+            body.classList.add(schoolClass + '-bg');
+            
+            // Hide placeholder
+            document.getElementById('placeholder').style.display = 'none';
+            
+            // Hide all school content
+            const allContent = document.querySelectorAll('.school-content');
+            allContent.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Show selected school content
+            document.getElementById(schoolId).classList.add('active');
+        }
+
+        // Reset background to default
+        function resetBackground() {
+            const body = document.body;
+            body.className = ''; // Remove all background classes
+            
+            // Remove active class from all school boxes
+            const schoolBoxes = document.querySelectorAll('.school-box');
+            schoolBoxes.forEach(box => box.classList.remove('active'));
+            
+            // Hide all school content and show placeholder
+            const allContent = document.querySelectorAll('.school-content');
+            allContent.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById('placeholder').style.display = 'block';
+        }
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Add smooth scroll behavior
+        document.addEventListener('DOMContentLoaded', function() {
+            const schoolBoxes = document.querySelectorAll('.school-box');
+            schoolBoxes.forEach(box => {
+                box.addEventListener('click', function() {
+                    setTimeout(() => {
+                        document.querySelector('.content-area').scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

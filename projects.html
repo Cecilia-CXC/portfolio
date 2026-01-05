@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - CXC Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #d8466e 0%, #8b8cd1 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links li a:hover,
+        .nav-links li a.active {
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 120px;
+            padding: 2rem 0 4rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            font-weight: 600;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .filter-btn.active {
+            background:  #8b8cd1;
+            color: white;
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .project-header {
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #d8466e, #8b8cd1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.3;
+        }
+
+        .project-category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .project-date {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .project-description {
+            color: #555;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            background: #f0f0f0;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .project-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: auto;
+        }
+
+        .project-link {
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-link.primary {
+            background: linear-gradient(90deg, #d8466e, #8b8cd1);
+            color: white;
+        }
+
+        .project-link.secondary {
+            background: rgba(216, 70, 110, 0.1);
+            color: #d8466e;
+            border: 2px solid #d8466e;
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 1.5rem 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                border-radius: 0 0 15px 15px;
+                gap: 0.5rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+                animation: slideDown 0.3s ease-out;
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 1rem 2rem;
+                margin: 0 1rem;
+                border-radius: 10px;
+                font-size: 1.1rem;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .page-title {
+                font-size: 2.2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-container {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Logo -->
+            <img src="CXC.png" alt="CXC Logo" class="logo">
+            
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="experience.html">Experience</a></li> 
+                <li><a href="faith.html">Faith</a></li>
+                <li><a href="honors.html">Honors</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+            </ul>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="mobile-toggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1 class="page-title">Projects</h1>
+            <p class="page-subtitle">Showcasing my work and learning journey</p>
+
+            <!-- Filter Buttons -->
+            <div class="filter-container">
+                <button class="filter-btn active" onclick="filterProjects('all', this)">All Projects</button>
+                <button class="filter-btn" onclick="filterProjects('school', this)">School Projects</button>
+                <button class="filter-btn" onclick="filterProjects('personal', this)">Self-Initiated</button>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Project data structure
+        const projects = [
+            {
+                id: 1,
+                title: "CO2 Emissions & The Impact on Our Climate",
+                category: "school",
+                description: "Created a poster which makes use of Data Analysis to look at how CO2 emissions impact our climate and what solutions can be done to combat it",
+                technologies: ["Canva", "QGIS", "Tableau", "Python"],
+                links: [
+                    { type: "Canva", url: "https://www.canva.com/design/DAGoIXPgpac/SoCkXItD3BHhBs-9VMyMRQ/view?utm_content=DAGoIXPgpac&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h2440e4844a", label: "Poster" },
+                    { type: "PDF", url: "https://drive.google.com/file/d/1ZUBeZ75mxFjgE3TDDufc2biXLMbLjuqb/view?usp=sharing", label: "Report" },
+                ]
+            },
+            {
+                id: 2, 
+                title: "Samsung Galaxy S25 Ultra YouTube Comments Sentiment Analysis",
+                category: "school",
+                description: "Made use of SAS Enterprise Miner to look at viewer sentiments based on Youtube Comments on the video release of the Samsung Galaxy S25 Ultra",
+                technologies: ["SAS Enterprise Miner"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/10qGQtF9mgWW6kskEgH6PYc8yU-AzCniF/view?usp=sharing", label: "Report" },
+                    { type: "Canva", url: "https://www.canva.com/design/DAGezoQVGf0/_Kgohalsisp6RAFoIiWC_w/view?utm_content=DAGezoQVGf0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h31eb2ffcb0", label: "Slides" }
+                ]
+            },
+            {
+                id: 3,
+                title: "Global Fashion Brand Analysis (1991-2021)",
+                category: "personal",
+                description: "Built a dashboard to showcase different fashion brands and their growth rate, equity and rankings over time",
+                technologies: ["Python", "Google LookerStudio"],
+                links: [
+                    { type: "Dashboard", url: "https://lookerstudio.google.com/reporting/d2abc230-cdb5-4981-9f2f-8371856cb3e6", label: "Dashboard" },
+                    { type: "Code", url: "https://github.com/Cecilia-CXC/goblal_fashion_brand_analysis.git", label: "Code" },
+                    { type: "Google Docs", url: "https://docs.google.com/document/d/1LFOQdk-ILlVhdJ6JdD9cXybhRq1Cnw-U1pH2Ww7L_Ho/edit?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 4,
+                title: "ETL Pipeline in AWS to Power BI",
+                category: "school",
+                description: "Designed and implemented a data warehouse for a retail business case study, including ETL processes and reporting.",
+                technologies: ["AWS", "ETL", "Power BI"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1G2vp8YC0dKUSPn0bK-uFk_Qk0hjy_xje/view?usp=sharing", label: "Project Report" }
+                ]
+            },
+            {
+                id: 5,
+                title: "SG Waste Management (2003-2017)",
+                category: "personal",
+                description: "Created a dashboard to look at the waste management in Singapore from 2003 to 2017",
+                technologies: ["Python", "PowerBI"],
+                links: [
+                    { type: "Code", url: "https://github.com/Cecilia-CXC/sg_waste_management", label: "Code" },
+                    { type: "PDF", url: "https://drive.google.com/file/d/1nwgLxCHWX6qvf7-H12KskaZDE0jNLEn7/view?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 6,
+                title: "Temasek Polytechnic Final Year Project: Room Allocation System Using Optimization Models",
+                category: "school",
+                description: "For my Final Year Project in Temasek Polytechnic, I made use of Python & an optimization model (Genetic Algorithm) to automate the room allocation system for Temasek Polytechnic ",
+                technologies: ["Python"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1ynvPsyxt-sZYaWrjofPJa31Bbw94vyEA/view?usp=sharing", label: "Report" },
+                    { type: "Slides", url: "https://www.canva.com/design/DAGn97KJs8c/OmiVq2VzNi8S19hSIvyPfw/view?utm_content=DAGn97KJs8c&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hc7dce82f06", label: "Slides" }
+                ]
+            },
+            {
+                id: 7,
+                title: "Flood Risk Zones in London using Machine Learning in QGIS",
+                category: "school",
+                description: "Made use of QGIS to perform & compare 3 different models to see which scores the best in predicting flood risk zones in London",
+                technologies: ["Python","QGIS"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1W5BZ0w6a3d2xlt-krB8D1try-Ksp-dVJ/view?usp=sharing", label: "Report" },
+                    { type: "Slides", url: "https://www.canva.com/design/DAGuybjOo64/sLSU0Uq9krfH6ovUhsiDuQ/view?utm_content=DAGuybjOo64&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hba7394c6a1", label: "Slides" }
+                ]
+            },
+            {
+                id: 8,
+                title: "Traffic Accidents Machine Learning With SAS Enterprise Miner",
+                category: "school",
+                description: "Made use of ML models in SAS Enterprise Miner to look at Traffic Accident Data and suggest solutions to mitigate future accidents",
+                technologies: ["Python","SAS Enterprise Miner"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1OiTqJI-oJ29emyIJFRMESLSCaNy__Nx6/view?usp=sharing", label: "Report" }
+                ]
+            }, 
+            {
+                id: 9,
+                title: "Hotel Analysis using Alteryx & MySQL",
+                category: "school",
+                description: "Made use of MySQL Workbench & Alteryx to analyse hotel data",
+                technologies: ["Alteryx", "MySQL"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1yJ-0dOHZvD99y0hjcdvhdHiDmqe7_4fT/view?usp=sharing", label: "Report" }
+                ]
+            }, 
+            {
+                id: 10,
+                title: "Chi Square Goodness-of-Fit & Test of Independence on Excel",
+                category: "school",
+                description: "Used Excel to perform the Chi Square Goodness of Fit test & Test of Independence",
+                technologies: ["Excel"],
+                links: [
+                    { type: "Video", url: "https://youtu.be/3fp2vQ20vO8", label: "Video Presentation" },
+                    { type: "PDF", url: "https://drive.google.com/file/d/13ceNIlHF733NDXPeqL9HslR_uDk1mWhe/view?usp=sharing", label: "Report" }
+                ]
+            }, 
+            {
+                id: 11,
+                title: "Youtube Research & Poster making Pair-Work",
+                category: "school",
+                description: "A pair-work involving research & poster creation about Youtube and its history (Me), its pros and cons (Partner) as well as other aspects",
+                technologies: ["Canva"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1jJ9v35IbnskQe-0MwX5LP6QBgygHnkhN/view?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 12,
+                title: "Data Analysis on Excel",
+                category: "school",
+                description: "Used Excel to perform data analysis & visualisation on a dataset",
+                technologies: ["Excel"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1jxbBta_188dI7GAlPAi2sC-QIfVN-CAz/view?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 13,
+                title: "Using New Media to improve the experience at Gardens By the Bay",
+                category: "school",
+                description: "Created a scenario using new media ideas to improve the experience at Gardens By the Bay",
+                technologies: [],
+                links: [
+                    { type: "Slides", url: "https://youtu.be/2O3GR6OBRko", label: "Slides" },
+                    { type: "PDF", url: "https://drive.google.com/file/d/15p87myfeAKVQl7ClZeWLMsgUed5u5vG2/view?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 14,
+                title: "Fake News Comic",
+                category: "school",
+                description: "Created a comic about Fake News and the laws in Singapore towards it",
+                technologies: [],
+                links: [
+                    { type: "Image", url: "https://drive.google.com/file/d/1-rmcHs0C3AjDbUt3UiYKH-WxB_lFttAx/view?usp=sharing", label: "Comic" }
+                ]
+            },
+            {
+                id: 15,
+                title: "Website Recreation using Green Software code",
+                category: "school",
+                description: "Evaluated a website and re-created the website that makes use of green software",
+                technologies: ["HTML", "CSS", "JavaScript"],
+                links: [
+                    { type: "Video", url: "https://youtu.be/PSv_bF8HbnE", label: "Video Presentation" },
+                    { type: "PDF", url: "https://drive.google.com/file/d/1dhCP_cIDgHbwKQ7TWk9Thpepap1YU_Ge/view?usp=sharing", label: "Report" }
+                ]
+            },
+            {
+                id: 16,
+                title: "About the Bible Website",
+                category: "personal",
+                description: "Created a simple static website that talks about the Bible ",
+                technologies: ["HTML", "CSS", "JavaScript"],
+                links: [
+                    { type: "Website", url: "https://cecilia-cxc.github.io/about_the_bible/", label: "Website" }
+                ]
+            },
+            {
+                id: 17,
+                title: "Restaurant Data Analysis",
+                category: "school",
+                description: "Performed Data Analysis on Restaurant data ",
+                technologies: ["KNIME", "PowerBI"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1LkVNUg7YjOXXkf7-nRwMMLGMtocyR7cg/view?usp=sharing", label: "Report" }
+                ]
+            },
+             {
+                id: 18,
+                title: "Greenhouse Gas Emission Exploratory Data Analysis",
+                category: "school",
+                description: "Performed Exploratory Data Analysis (EDA) using to look at GHG Emissions of different factors ",
+                technologies: ["KNIME"],
+                links: [
+                    { type: "PDF", url: "https://drive.google.com/file/d/1beP8eHk-6Kp2nrlBPD3B0Q1r25GXNGng/view?usp=sharing", label: "Report" }
+                ]
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        // Initialize page
+        function init() {
+            renderProjects(projects);
+        }
+
+        // Render projects
+        function renderProjects(projectsToRender) {
+            const grid = document.getElementById('projectsGrid');
+            
+            if (projectsToRender.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No projects found</h3>
+                        <p>Try selecting a different filter</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = projectsToRender.map(project => `
+                <div class="project-card" data-category="${project.category}">
+                    <div class="project-header">
+                        <h3 class="project-title">${project.title}</h3>
+                        <span class="project-category">${project.category === 'school' ? 'School Project' : 'Self-Initiated'}</span>
+                    </div>
+                    <p class="project-description">${project.description}</p>
+                    ${project.technologies && project.technologies.length > 0 ? `
+                    <div class="project-tech">
+                        ${project.technologies.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                    </div>
+                    ` : ''}
+                    <div class="project-links">
+                        ${project.links.map((link, index) => `
+                            <a href="${link.url}" class="project-link ${index === 0 ? 'primary' : 'secondary'}" target="_blank">
+                                ${getLinkIcon(link.type)} ${link.label}
+                            </a>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get icon for link type
+        function getLinkIcon(type) {
+            const icons = {
+                'PDF': '📄',
+                'Slides': '📊',
+                'Google Docs': '📝',
+                'Dashboard': '📊',
+                'Canva': '🎨',
+                'Demo': '🚀',
+                'Code': '💻',
+                'Video': '🎥'
+            };
+            return icons[type] || '🔗';
+        }
+
+        // Filter projects - FIXED: Added buttonElement parameter
+        function filterProjects(filter, buttonElement) {
+            currentFilter = filter;
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            buttonElement.classList.add('active');
+            
+            // Filter and render projects
+            if (filter === 'all') {
+                renderProjects(projects);
+            } else {
+                const filtered = projects.filter(project => project.category === filter);
+                renderProjects(filtered);
+            }
+        }
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        }
+
+        // Navbar background change on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
