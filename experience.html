@@ -33,6 +33,10 @@
             background: #00868B;    
         }
 
+        body.bs-bg{
+            background: #3f9c87;
+        }
+
         /* Navigation Bar */
         .navbar {
             position: fixed;
@@ -487,7 +491,18 @@
 
             <!-- Experience Selection Boxes -->
             <div class="experiences-container">
-                <!-- Experience 1: Current Internship -->
+
+                <!-- Experience 0: Current Volunteer - Bible Society Singapore -->
+                <div class="experience-box" onclick="showExperienceContent('experience0', 'bs')">
+                    <div class="experience-type">Volunteer Work</div>
+                    <div class="experience-info">
+                        <h3>Volunteer</h3>
+                        <div class="experience-company">The Bible Society Singapore</div>
+                        <div class="experience-years">April 2026 - Present</div>
+                    </div>
+                </div>
+
+                <!-- Experience 1: Internship -->
                 <div class="experience-box" onclick="showExperienceContent('experience1', 'metabots')">
                     <div class="experience-type">Polytechnic Internship</div>
                     <div class="experience-info">
@@ -516,6 +531,7 @@
                         <div class="experience-years">Aug 2023 - Oct 2023</div>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -526,6 +542,33 @@
             <div class="content-placeholder" id="placeholder">
                 <h2>Select an experience to view details</h2>
                 <p>Click on any of the experiences above to learn more about my roles and contributions.</p>
+            </div>
+
+            <!-- Experience 0 Content: Bible Society Singapore -->
+            <div class="experience-content" id="experience0">
+                <div class="container">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Volunteer</h2>
+                            <div class="content-company">The Bible Society Singapore</div>
+                            <div class="content-years">April 2026 - Present</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About My Role</h3>
+                        <p>To be added</p>
+                        
+                        <h3>Key Responsibilities</h3>
+                        <ul>
+                            <li>To be Added</li>
+                        </ul>
+
+                        <h3>Skills Developed</h3>
+                        <div class="skills-tags">
+                            <p>To be added</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Experience 1 Content -->
