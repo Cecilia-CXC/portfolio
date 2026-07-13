@@ -21,6 +21,10 @@
         }
 
         /* Experience-specific background colors */
+        body.ntu-bg {
+            background: #282758; 
+        }
+
         body.metabots-bg {
             background: #ff7600; 
         }
@@ -492,6 +496,16 @@
             <!-- Experience Selection Boxes -->
             <div class="experiences-container">
 
+                <!-- NEW Experience (Latest) - PLACEHOLDER -->
+                <div class="experience-box" onclick="showExperienceContent('experienceNew', 'newexp')">
+                    <div class="experience-type">Temporary Role</div>
+                    <div class="experience-info">
+                        <h3>Temporary Information Management Executive</h3>
+                        <div class="experience-company">Nanyang Technological University</div>
+                        <div class="experience-years">June 2026 - August 2026</div>
+                    </div>
+                </div>
+
                 <!-- Experience 0: Volunteer - Bible Society Singapore -->
                 <div class="experience-box" onclick="showExperienceContent('experience0', 'bs')">
                     <div class="experience-type">Volunteer Work</div>
@@ -542,6 +556,35 @@
             <div class="content-placeholder" id="placeholder">
                 <h2>Select an experience to view details</h2>
                 <p>Click on any of the experiences above to learn more about my roles and contributions.</p>
+            </div>
+
+            <!-- NEW Experience Content - PLACEHOLDER -->
+            <div class="experience-content" id="experienceNew">
+                <div class="container">
+                    <div class="content-header">
+                        <div class="content-title">
+                            <h2>Temporary Information Management Executive</h2>
+                            <div class="content-company">Nanyang Technological University</div>
+                            <div class="content-years">June 2026 - August 2026</div>
+                        </div>
+                    </div>
+                    <div class="content-body">
+                        <h3>About the Role</h3>
+                        <p>I worked as a temporary staff at NTU while awaiting for undergraduate studies to commence</p>
+                        
+                        <h3>Key Responsibilities</h3>
+                        <ul>
+                            <li>Update Alumni data on CRM</li>
+                        </ul>
+
+                        <h3>Skills Applied</h3>
+                        <div class="skills-tags">
+                            <span class="skill-tag">Excel</span>
+                            <span class="skill-tag">Blackbaud CRM</span>
+                            <span class="skill-tag">Data Entry</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Experience 0 Content: Bible Society Singapore -->
